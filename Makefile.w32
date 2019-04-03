@@ -1,0 +1,22 @@
+# Win32 Makefile to be used with Visual Studio 2017
+# created by Zoltan Frombach <tssajo@gmail.com>
+
+CC = cl
+CFLAGS = /MT -I. -I./src -I../mozjpeg -I../mozjpeg/build -DHAVE_CONFIG_H -D_CONSOLE /W2 /O2 /DNDEBUG /nologo
+LFLAGS = /DEBUG:NONE
+LIBJPEG = ../mozjpeg/WIN32/jpeg-static.lib
+LIBIQA = src/iqa/build/release/iqa.lib
+LIBWEBP = ../libwebp/output/release-static/x64/lib/libwebp.lib ../libwebp/output/release-static/x64/lib/libwebpdecoder.lib
+
+all: archive2webp
+
+archive2webp: archive2webp.obj src/util.obj src/edit.obj src/smallfry.obj
+	$(CC) $(CFLAGS) /Fearchive2webp.exe archive2webp.obj util.obj edit.obj smallfry.obj $(LIBIQA) $(LIBJPEG) $(LIBWEBP) $(LDFLAGS) /link $(LFLAGS)
+
+%.obj: %.c %.h
+	$(CC) $(CFLAGS) /c $<
+
+clean:
+	del /Q archive2webp.exe archive2webp.obj
+	del /Q archive2webp.exp archive2webp.lib
+	del /Q util.obj edit.obj smallfry.obj
