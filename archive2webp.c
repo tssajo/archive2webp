@@ -11,6 +11,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <float.h>
+#include <limits.h>
 
 #include "../libwebp/src/webp/encode.h"
 #include "../libwebp/src/webp/encode.h"
